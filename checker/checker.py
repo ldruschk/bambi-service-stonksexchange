@@ -5,7 +5,7 @@ import secrets
 class StonksExchangeChecker(enochecker.BaseChecker):
     port = 8199
     flag_count = 1
-    noise_count = 1
+    noise_count = 0
     havoc_count = 0
     service_name = "stonksexchange"
 
