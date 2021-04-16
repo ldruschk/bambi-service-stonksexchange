@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 Login
+  p
+    | Sign in with your account. Don't have one? 
+    a(href='/register') Register Now.
+    form(role='form', action='login', method='post')
+      .form-group
+        label(for='username') Username:
+        input.form-control(type='text', id='user', name='username', placeholder='enter your username')
+      .form-group
+        label(for='password') Password:
+        input.form-control(type='password', id='password', name='password', placeholder='enter your password')
+      button.btn.btn-primary(type='submit') Submit

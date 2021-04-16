@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+service/stonksexchange-db/
+checker/stonksexchange-checker-db/
+checker/.data/

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  stonksexchange-service:
+    build: .
+    ports:
+      - 8199:3000
+    environment:
+     - MONGO_ENABLED=1
+     - MONGO_HOST=stonksexchange-db
+     - MONGO_PORT=27017
+     - MONGO_USER=enoislove
+     - MONGO_PASSWORD=enoislife1337
+    restart: unless-stopped
+  stonksexchange-db:
+    image: mongo
+    volumes:
+      - ./stonksexchange-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: enoislove
+      MONGO_INITDB_ROOT_PASSWORD: enoislife1337
+    restart: unless-stopped

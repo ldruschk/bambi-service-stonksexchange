@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    a.header(href='/') Home
+    a.header(href='/about') About
+    if user
+      a.header(href='/messages') Messages
+      a.header(href='/logout') Logout
+    else
+      a.header(href='/login') Login
+      a.header(href='/register') Register
+    hr
+    block content
