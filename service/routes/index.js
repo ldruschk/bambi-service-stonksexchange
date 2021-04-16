@@ -26,12 +26,12 @@ router.get('/messages', function (req, res, next) {
     return;
   }
   var db = req.app.locals.db;
-  db.collection('messages').find({ 'username': req.session.user }).toArray((err, results) => {
+  db.collection('messages').find({ 'username': req.session.user }, { 'sort': { '$natural': -1 } }).limit(50).toArray((err, results) => {
     if (err) {
       res.status(500).send('Internal server error');
       return;
     }
-    res.locals.messages = results.reverse();
+    res.locals.messages = results;
     res.render('messages', { title: 'Messages' });
   });
 });
