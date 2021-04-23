@@ -106,3 +106,5 @@ dist
 service/stonksexchange-db/
 checker/stonksexchange-checker-db/
 checker/.data/
+
+.vscode/
