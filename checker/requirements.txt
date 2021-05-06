@@ -1,3 +1,4 @@
 enochecker>=0.3.1
+eventlet==0.30.2
 gunicorn[eventlet]
 dnspython<2
