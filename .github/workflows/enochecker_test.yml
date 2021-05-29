@@ -12,13 +12,12 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       ENOCHECKER_TEST_CHECKER_ADDRESS: localhost
       ENOCHECKER_TEST_CHECKER_PORT: 8198
 
     steps:
-      - uses: enowars/action-cleanup-runner@v1
       - uses: actions/checkout@v2
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
