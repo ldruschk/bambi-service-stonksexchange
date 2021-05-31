@@ -38,9 +38,12 @@ class StonksExchangeChecker(enochecker.BaseChecker):
         if self.variant_id > 0:
             raise enochecker.BrokenCheckerException(f"invalid variant_id in putflag: {self.variant_id}")
 
-        vals = self.chain_db
-        username = vals["username"]
-        password = vals["password"]
+        try:
+            vals = self.chain_db
+            username = vals["username"]
+            password = vals["password"]
+        except KeyError:
+            raise enochecker.BrokenServiceException("Missing entries from putflag")
 
         self.login_user(username, password)
         assert self.flag  # ensure self.flag is not None
@@ -78,16 +81,22 @@ class StonksExchangeChecker(enochecker.BaseChecker):
     def getnoise(self) -> None:
         if self.variant_id == 0:
             # send noise to different user
-            vals = self.chain_db
-            username = vals["username"]
-            password = vals["password"]
+            try:
+                vals = self.chain_db
+                username = vals["username"]
+                password = vals["password"]
+            except KeyError:
+                raise enochecker.BrokenServiceException("Missing entries from putnoise")
 
             self.login_user(username, password)
             self.receive_message(self.noise)
         elif self.variant_id == 1:
-            vals = self.chain_db
-            username = vals["username"]
-            password = vals["password"]
+            try:
+                vals = self.chain_db
+                username = vals["username"]
+                password = vals["password"]
+            except KeyError:
+                raise enochecker.BrokenServiceException("Missing entries from putnoise")
 
             self.login_user(username, password)
             self.receive_message(self.noise)
