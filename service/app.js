@@ -33,8 +33,14 @@ app.use(function (req, res, next) {
 
 MongoClient.connect('mongodb://enoislove:enoislife1337@stonksexchange-db/', {
   useUnifiedTopology: true
-}, (err, client) => {
+}, async (err, client) => {
   app.locals.db = client.db();
+  await app.locals.db.collection('users').createIndex({
+    username: 1
+  });
+  await app.locals.db.collection('messages').createIndex({
+    username: 1
+  });
 });
 
 app.use('/', indexRouter);
