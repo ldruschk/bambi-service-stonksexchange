@@ -108,3 +108,5 @@ checker/stonksexchange-checker-db/
 checker/.data/
 
 .vscode/
+
+**/__pycache__/
