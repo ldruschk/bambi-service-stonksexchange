@@ -71,9 +71,10 @@ async def exploit_test(searcher: FlagSearcher, client: AsyncClient) -> Optional[
 
     r = await client.get("/messages")
     assert not r.is_error
-    flag = searcher.search_flag(r.text)
+
+    flag = searcher.search_flag(r.content)
     if flag:
-        return flag
+        return flag.decode()
 
     raise MumbleException("exploit failed")
 
