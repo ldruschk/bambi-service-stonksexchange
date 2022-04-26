@@ -1,5 +1,5 @@
 import secrets
-from logging import Logger, LoggerAdapter
+from logging import LoggerAdapter
 from typing import Optional, Tuple
 
 from enochecker3 import ChainDB, Enochecker, GetflagCheckerTaskMessage, MumbleException, PutflagCheckerTaskMessage
@@ -48,7 +48,7 @@ async def receive_message(client: AsyncClient, message: str) -> None:
 
 
 @checker.putflag(0)
-async def putflag_test(task: PutflagCheckerTaskMessage, session_a: AsyncClient, session_b: AsyncClient, db: ChainDB, logger: LoggerAdapter[Logger]) -> None:
+async def putflag_test(task: PutflagCheckerTaskMessage, session_a: AsyncClient, session_b: AsyncClient, db: ChainDB, logger: LoggerAdapter) -> None:
     await register_user(session_a)
     logger.debug("registered user for session_a")
     (username_b, password_b) = await register_user(session_b)
