@@ -14,7 +14,7 @@ async def register_user(client: AsyncClient) -> Tuple[str, str]:
     username = secrets.token_hex(6)
     password = secrets.token_hex(8)
     try:
-        response = await client.post("/register", data={"username": username, "password": password})
+        response = await client.post("/register", data={"username": username, "password": password}, follow_redirects=True)
     except RequestError:
         raise MumbleException("request error while logging in")
     assert_equals(response.status_code, 200, "registration failed")
@@ -24,7 +24,7 @@ async def register_user(client: AsyncClient) -> Tuple[str, str]:
 
 async def login_user(client: AsyncClient, username: str, password: str) -> None:
     try:
-        response = await client.post("/login", data={"username": username, "password": password})
+        response = await client.post("/login", data={"username": username, "password": password}, follow_redirects=True)
     except RequestError:
         raise MumbleException("request error while logging in")
     assert_equals(response.status_code, 200, "login failed")
@@ -32,7 +32,7 @@ async def login_user(client: AsyncClient, username: str, password: str) -> None:
 
 async def send_message(client: AsyncClient, username: str, message: str) -> None:
     try:
-        response = await client.post("/message", data={"username": username, "message": message})
+        response = await client.post("/message", data={"username": username, "message": message}, follow_redirects=True)
     except RequestError:
         raise MumbleException("request error while sending message")
     assert_equals(response.status_code, 200, "sending message failed")
