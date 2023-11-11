@@ -1,7 +1,7 @@
 FROM node
-
-ADD package.json .
+WORKDIR /app
+COPY package.json package.json
 RUN npm install
-ADD . .
+COPY . .
 
 ENTRYPOINT ["npm", "start"]
