@@ -1,1 +1,1 @@
-enochecker3>=0.7.0
+enochecker3>=0.9.0
