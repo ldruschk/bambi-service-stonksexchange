@@ -1,1 +1,1 @@
-git+https://github.com/enowars/enochecker3.git@bump-deps-2
+enochecker3>=0.9.1
